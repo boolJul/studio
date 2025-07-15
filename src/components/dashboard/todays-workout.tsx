@@ -1,10 +1,13 @@
 "use client"
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dumbbell, Clock, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
+import { generateImage } from '@/ai/flows/generate-image-flow';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const workout = {
   title: "Full Body Strength",
@@ -21,6 +24,26 @@ const workout = {
 };
 
 export function TodaysWorkout() {
+  const [imageUrl, setImageUrl] = useState<string>(workout.imageUrl);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      setLoading(true);
+      try {
+        const response = await generateImage({ prompt: workout.imageHint });
+        setImageUrl(response.imageUrl);
+      } catch (error) {
+        console.error("Failed to generate image:", error);
+        // Keep placeholder on error
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchImage();
+  }, []);
+
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>
@@ -34,13 +57,17 @@ export function TodaysWorkout() {
       </CardHeader>
       <CardContent className="grid md:grid-cols-2 gap-6">
         <div className="relative aspect-video rounded-md overflow-hidden">
-           <Image 
-            src={workout.imageUrl} 
-            alt={workout.title} 
-            fill
-            className="object-cover"
-            data-ai-hint={workout.imageHint}
-          />
+           {loading ? (
+            <Skeleton className="h-full w-full" />
+          ) : (
+            <Image 
+              src={imageUrl} 
+              alt={workout.title} 
+              fill
+              className="object-cover"
+              data-ai-hint={workout.imageHint}
+            />
+          )}
         </div>
         <div className="space-y-4">
             <p className="text-muted-foreground">{workout.description}</p>
