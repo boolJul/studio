@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import Link from 'next/link';
-import { Home, Dumbbell, Settings } from 'lucide-react';
+import { Home, Dumbbell, Settings, Utensils } from 'lucide-react';
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -39,24 +39,32 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
             <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
-                    <Link href="/workouts">
-                        <Dumbbell />
-                        <span>Workouts</span>
-                    </Link>
+              <Link href="/workouts">
+                <SidebarMenuButton isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
+                    <Dumbbell />
+                    <span>Workouts</span>
                 </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+              <Link href="/nutrition">
+                <SidebarMenuButton isActive={pathname.startsWith('/nutrition')} tooltip="Nutrition">
+                    <Utensils />
+                    <span>Nutrition</span>
+                </SidebarMenuButton>
+              </Link>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton asChild isActive={pathname === '/settings'} tooltip="Settings">
-                        <Link href="/settings">
-                            <Settings />
-                            <span>Settings</span>
-                        </Link>
+                  <Link href="/settings">
+                    <SidebarMenuButton isActive={pathname === '/settings'} tooltip="Settings">
+                        <Settings />
+                        <span>Settings</span>
                     </SidebarMenuButton>
+                  </Link>
                 </SidebarMenuItem>
             </SidebarMenu>
         </SidebarFooter>
