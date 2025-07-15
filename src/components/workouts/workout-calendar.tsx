@@ -3,16 +3,11 @@
 
 import * as React from "react"
 import { addDays, format } from "date-fns"
-import { CheckCircle2, Circle } from "lucide-react"
+import { CheckCircle2, Circle, Plus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import {
   Dialog,
   DialogContent,
@@ -98,6 +93,15 @@ export function WorkoutCalendar() {
             />
         </CardContent>
       </Card>
+      
+      <Button 
+        className="w-full mt-4" 
+        onClick={() => setIsLogDialogOpen(true)}
+        disabled={!date}
+      >
+        <Plus className="mr-2 h-4 w-4" />
+        Log Workout
+      </Button>
 
       <Dialog open={isLogDialogOpen} onOpenChange={setIsLogDialogOpen}>
         <DialogContent>
