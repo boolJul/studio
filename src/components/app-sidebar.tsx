@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 import Link from 'next/link';
-import { Home, Dumbbell, Settings, Utensils } from 'lucide-react';
+import { Home, Dumbbell, Settings, Utensils, TrendingUp } from 'lucide-react';
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -59,6 +59,14 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
                     <span>Nutrition</span>
                 </SidebarMenuButton>
               </Link>
+            </SidebarMenuItem>
+             <SidebarMenuItem>
+                <Link href="/progress">
+                    <SidebarMenuButton isActive={pathname.startsWith('/progress')} tooltip="Progress">
+                        <TrendingUp />
+                        <span>Progress</span>
+                    </SidebarMenuButton>
+                </Link>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
