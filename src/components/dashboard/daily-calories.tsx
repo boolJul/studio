@@ -1,17 +1,40 @@
+
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Flame } from "lucide-react";
+import { calculateDailyCaloricTarget } from '@/lib/fitness-calculator';
+import type { SettingsFormValues } from '@/lib/types';
+
+// Mock user settings. In a real app, this would come from a user context or API.
+const mockUserSettings: SettingsFormValues = {
+  age: 28,
+  sex: "male",
+  height: 175,
+  weight: 70,
+  activityLevel: "moderately_active",
+  fitnessGoal: "maintenance",
+  workoutReminders: false,
+  progressUpdates: true,
+  socialNotifications: false,
+};
+
 
 export function DailyCalories() {
   const [consumed, setConsumed] = useState(1250);
-  const [target] = useState(2500);
+  const [target, setTarget] = useState(2500);
   const [food, setFood] = useState("");
   const [calories, setCalories] = useState<number | string>("");
+
+  useEffect(() => {
+    // Calculate target calories based on user settings when the component mounts.
+    const calculatedTarget = calculateDailyCaloricTarget(mockUserSettings);
+    setTarget(calculatedTarget);
+  }, []);
 
   const handleAddCalories = () => {
     const newCalories = typeof calories === 'number' ? calories : parseInt(calories);

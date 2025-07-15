@@ -1,3 +1,4 @@
+
 import { z } from "zod";
 
 export const settingsSchema = z.object({
@@ -24,3 +25,7 @@ export const settingsSchema = z.object({
 });
 
 export type SettingsFormValues = z.infer<typeof settingsSchema>;
+
+export type BMRData = Pick<SettingsFormValues, 'sex' | 'weight' | 'height' | 'age'>;
+export type TDEEData = BMRData & Pick<SettingsFormValues, 'activityLevel'>;
+export type CaloricTargetData = TDEEData & Pick<SettingsFormValues, 'fitnessGoal'>;
