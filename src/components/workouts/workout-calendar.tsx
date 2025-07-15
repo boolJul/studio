@@ -3,7 +3,7 @@
 
 import * as React from "react"
 import { addDays, format } from "date-fns"
-import { CheckCircle2, Circle, Plus } from "lucide-react"
+import { CheckCircle2, Circle, Dumbbell, Plus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,8 +17,9 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
+import { Separator } from "../ui/separator"
 
 const initialCompletedWorkouts: Record<string, string[]> = {
   [format(new Date(), "yyyy-MM-dd")]: ["Full Body Strength"],
@@ -41,6 +42,9 @@ export function WorkoutCalendar() {
   const [completedWorkouts, setCompletedWorkouts] = React.useState(initialCompletedWorkouts);
   const [isLogDialogOpen, setIsLogDialogOpen] = React.useState(false);
   const { toast } = useToast();
+
+  const selectedDateKey = date ? format(date, "yyyy-MM-dd") : "";
+  const workoutsForSelectedDay = completedWorkouts[selectedDateKey] || [];
 
   const handleLogWorkout = (workout: string) => {
     if (!date) return;
@@ -85,12 +89,32 @@ export function WorkoutCalendar() {
                   return (
                     <div className="relative h-full w-full flex items-center justify-center">
                       <span>{dayDate.getDate()}</span>
-                      {workouts && <CheckCircle2 className="absolute text-primary w-2 h-2 top-1 right-1" />}
+                      {workouts && workouts.length > 0 && <CheckCircle2 className="absolute text-primary w-2 h-2 top-1 right-1" />}
                     </div>
                   );
                 },
               }}
             />
+        </CardContent>
+        <Separator />
+         <CardHeader>
+            <CardTitle className="text-base">
+                Workouts on {date ? format(date, "MMMM do") : 'selected date'}
+            </CardTitle>
+        </CardHeader>
+        <CardContent>
+            {workoutsForSelectedDay.length > 0 ? (
+                <ul className="space-y-2">
+                    {workoutsForSelectedDay.map((workout, index) => (
+                        <li key={index} className="flex items-center gap-3 text-sm">
+                           <Dumbbell className="w-4 h-4 text-primary" />
+                           <span>{workout}</span>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p className="text-sm text-muted-foreground">No workouts logged for this day.</p>
+            )}
         </CardContent>
       </Card>
       
