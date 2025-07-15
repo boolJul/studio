@@ -56,7 +56,11 @@ const generateMealPlanFlow = ai.defineFlow(
     outputSchema: GenerateMealPlanOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await ai.generate({
+        prompt,
+        model: 'googleai/gemini-1.5-flash',
+        input,
+    });
     return output!;
   }
 );
