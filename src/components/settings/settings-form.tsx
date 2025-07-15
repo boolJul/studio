@@ -57,7 +57,7 @@ export function SettingsForm() {
 
   useEffect(() => {
     form.reset(userSettings);
-  }, [userSettings, form]);
+  }, [JSON.stringify(userSettings), form.reset]);
 
   function onSubmit(data: SettingsFormValues) {
     setSettings(data);
