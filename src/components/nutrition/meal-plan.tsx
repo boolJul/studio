@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -9,7 +10,9 @@ import { generateImage } from '@/ai/flows/generate-image-flow';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Terminal } from 'lucide-react';
 
-interface MealWithImage extends GenerateMealPlanOutput['meals'][0] {
+type Meal = GenerateMealPlanOutput['meals'][number];
+
+interface MealWithImage extends Meal {
   imageUrl: string;
   loading: boolean;
 }
