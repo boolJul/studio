@@ -57,12 +57,12 @@ export function TodaysWorkout() {
                     <CheckCircle className="mr-2 h-4 w-4"/>
                     Mark as Completed
                 </Button>
-                 <Link href="#">
-                    <Button variant="outline">
+                <Button variant="outline" asChild>
+                    <Link href="#">
                         <Clock className="mr-2 h-4 w-4"/>
                         Change Workout
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
             </div>
         </div>
       </CardContent>

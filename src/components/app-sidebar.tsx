@@ -31,32 +31,32 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-                <Link href="/" legacyBehavior passHref>
-                    <SidebarMenuButton isActive={pathname === '/'} tooltip="Dashboard">
+                <SidebarMenuButton asChild isActive={pathname === '/'} tooltip="Dashboard">
+                    <Link href="/">
                         <Home />
                         <span>Dashboard</span>
-                    </SidebarMenuButton>
-                </Link>
+                    </Link>
+                </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-                <Link href="/workouts" legacyBehavior passHref>
-                    <SidebarMenuButton isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
+                <SidebarMenuButton asChild isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
+                    <Link href="/workouts">
                         <Dumbbell />
                         <span>Workouts</span>
-                    </SidebarMenuButton>
-                </Link>
+                    </Link>
+                </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter>
             <SidebarMenu>
                 <SidebarMenuItem>
-                     <Link href="/settings" legacyBehavior passHref>
-                        <SidebarMenuButton isActive={pathname === '/settings'} tooltip="Settings">
+                    <SidebarMenuButton asChild isActive={pathname === '/settings'} tooltip="Settings">
+                        <Link href="/settings">
                             <Settings />
                             <span>Settings</span>
-                        </SidebarMenuButton>
-                    </Link>
+                        </Link>
+                    </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarMenu>
         </SidebarFooter>
