@@ -34,7 +34,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <Link href="/" legacyBehavior passHref>
+              <Link href="/">
                 <SidebarMenuButton isActive={pathname === '/'} tooltip="Overview">
                   <Home />
                   <span>Overview</span>
@@ -42,7 +42,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <Link href="/workouts" legacyBehavior passHref>
+              <Link href="/workouts">
                 <SidebarMenuButton isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
                     <Dumbbell />
                     <span>Workouts</span>
@@ -50,7 +50,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
              <SidebarMenuItem>
-              <Link href="/nutrition" legacyBehavior passHref>
+              <Link href="/nutrition">
                 <SidebarMenuButton isActive={pathname.startsWith('/nutrition')} tooltip="Nutrition">
                     <Utensils />
                     <span>Nutrition</span>
@@ -58,7 +58,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                <Link href="/progress" legacyBehavior passHref>
+                <Link href="/progress">
                     <SidebarMenuButton isActive={pathname.startsWith('/progress')} tooltip="Progress">
                         <TrendingUp />
                         <span>Progress</span>
@@ -66,7 +66,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
                 </Link>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                  <Link href="/settings" legacyBehavior passHref>
+                  <Link href="/settings">
                     <SidebarMenuButton isActive={pathname === '/settings'} tooltip="Settings">
                         <Settings />
                         <span>Settings</span>
@@ -78,8 +78,8 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         <SidebarFooter>
             <div className="flex items-center gap-3 p-2">
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src="https://placehold.co/40x40.png" alt="Guest User" data-ai-hint="avatar user" />
+                    <AvatarFallback>GU</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col group-data-[collapsible=icon]:hidden">
                     <span className="font-semibold text-sm">Guest User</span>
