@@ -19,6 +19,12 @@ import { Home, Dumbbell, Settings, Utensils } from 'lucide-react';
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
+  const getPageTitle = () => {
+    if (pathname === '/') return 'Dashboard';
+    const segment = pathname.split('/').pop();
+    return segment ? segment.charAt(0).toUpperCase() + segment.slice(1) : 'Dashboard';
+  };
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -72,7 +78,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
       <SidebarInset>
          <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
             <SidebarTrigger />
-            <h1 className="text-xl font-semibold capitalize">{pathname.split('/').pop() || 'Dashboard'}</h1>
+            <h1 className="text-xl font-semibold capitalize">{getPageTitle()}</h1>
         </header>
         {children}
       </SidebarInset>
