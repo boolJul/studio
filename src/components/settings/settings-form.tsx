@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +28,8 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { settingsSchema, type SettingsFormValues } from "@/lib/types";
+import { useUserSettings } from "@/hooks/use-user-settings";
+import { useEffect } from "react";
 
 const activityLevels = [
   { value: "sedentary", label: "Sedentary (little or no exercise)" },
@@ -44,25 +47,20 @@ const fitnessGoals = [
 
 export function SettingsForm() {
   const { toast } = useToast();
+  const { setSettings, ...userSettings } = useUserSettings();
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsSchema),
-    defaultValues: {
-      age: 28,
-      sex: "male",
-      height: 175,
-      weight: 70,
-      activityLevel: "moderately_active",
-      fitnessGoal: "maintenance",
-      workoutReminders: false,
-      progressUpdates: true,
-      socialNotifications: false,
-    },
+    defaultValues: userSettings,
     mode: "onChange",
   });
 
+  useEffect(() => {
+    form.reset(userSettings);
+  }, [userSettings, form]);
+
   function onSubmit(data: SettingsFormValues) {
-    console.log(data);
+    setSettings(data);
     toast({
       title: "Settings Saved",
       description: "Your new settings have been successfully saved.",
@@ -131,7 +129,7 @@ export function SettingsForm() {
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value}
                       className="flex flex-col space-y-1 md:flex-row md:space-y-0 md:space-x-4"
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
@@ -176,7 +174,7 @@ export function SettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Activity Level</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your activity level" />
@@ -198,7 +196,7 @@ export function SettingsForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Primary Fitness Goal</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select your fitness goal" />
