@@ -31,12 +31,12 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={pathname === '/'} tooltip="Dashboard">
-                    <Link href="/">
-                        <Home />
-                        <span>Dashboard</span>
-                    </Link>
+              <Link href="/">
+                <SidebarMenuButton isActive={pathname === '/'} tooltip="Dashboard">
+                  <Home />
+                  <span>Dashboard</span>
                 </SidebarMenuButton>
+              </Link>
             </SidebarMenuItem>
             <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
