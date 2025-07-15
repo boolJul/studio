@@ -47,6 +47,7 @@ For each meal, provide a title, a short description, an estimated calorie count,
 Ensure the meals are balanced and appropriate for the specified fitness goal.
 Do not include snacks. Provide exactly three meals.
 `,
+  model: 'googleai/gemini-1.5-flash',
 });
 
 const generateMealPlanFlow = ai.defineFlow(
@@ -56,11 +57,7 @@ const generateMealPlanFlow = ai.defineFlow(
     outputSchema: GenerateMealPlanOutputSchema,
   },
   async input => {
-    const {output} = await ai.generate({
-        prompt,
-        model: 'googleai/gemini-1.5-flash',
-        input,
-    });
+    const {output} = await prompt(input);
     return output!;
   }
 );
