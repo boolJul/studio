@@ -33,7 +33,7 @@ const chartData = generateMockWeightData();
 
 const chartConfig = {
   weight: {
-    label: "Weight (kg)",
+    label: "Weight",
     color: "hsl(var(--chart-1))",
   },
 }
@@ -42,25 +42,24 @@ export function WeightChart() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-4">
-          <Scale className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle>Weight Progress</CardTitle>
-            <CardDescription>Your weight trend over the last 30 days.</CardDescription>
-          </div>
-        </div>
+        <CardTitle>Weight</CardTitle>
+        <CardDescription>
+          Current: <span className="font-bold text-foreground">{chartData[chartData.length - 1].weight} kg</span>
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="h-40 w-full">
           <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
-              left: 12,
+              left: 0,
               right: 12,
+              top: 0,
+              bottom: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)"/>
             <XAxis
               dataKey="date"
               tickLine={false}
@@ -73,17 +72,18 @@ export function WeightChart() {
               axisLine={false}
               tickMargin={8}
               domain={['dataMin - 2', 'dataMax + 2']}
+              hide
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent hideLabel unit="kg" />}
             />
             <Line
               dataKey="weight"
               type="monotone"
               stroke="var(--color-weight)"
               strokeWidth={2}
-              dot={true}
+              dot={false}
             />
           </LineChart>
         </ChartContainer>

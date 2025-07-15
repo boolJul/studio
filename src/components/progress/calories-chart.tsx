@@ -1,7 +1,7 @@
 "use client"
 
 import { subDays, format } from "date-fns"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
@@ -31,34 +31,34 @@ const chartData = generateMockCalorieData()
 
 const chartConfig = {
   calories: {
-    label: "Calories (kcal)",
+    label: "Calories",
     color: "hsl(var(--chart-2))",
   },
 }
 
 export function CaloriesChart() {
+  const avgCalories = Math.round(chartData.reduce((acc, item) => acc + item.calories, 0) / chartData.length);
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-4">
-          <Flame className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle>Calorie Intake</CardTitle>
-            <CardDescription>Your daily calorie consumption over the last 30 days.</CardDescription>
-          </div>
-        </div>
+        <CardTitle>Calories</CardTitle>
+        <CardDescription>
+          Daily average: <span className="font-bold text-foreground">{avgCalories} kcal</span>
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
+        <ChartContainer config={chartConfig} className="h-40 w-full">
+          <BarChart
             accessibilityLayer
             data={chartData}
-            margin={{
-              left: 12,
+             margin={{
+              left: 0,
               right: 12,
+              top: 0,
+              bottom: 12,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
             <XAxis
               dataKey="date"
               tickLine={false}
@@ -66,21 +66,14 @@ export function CaloriesChart() {
               tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              domain={['dataMin - 100', 'dataMax + 100']}
-            />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-            <Area
+            <YAxis hide/>
+            <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" unit="kcal" hideLabel />} />
+            <Bar
               dataKey="calories"
-              type="natural"
               fill="var(--color-calories)"
-              fillOpacity={0.4}
-              stroke="var(--color-calories)"
+              radius={4}
             />
-          </AreaChart>
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>

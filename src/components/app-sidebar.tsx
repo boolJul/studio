@@ -15,37 +15,34 @@ import {
 import { usePathname } from "next/navigation";
 import Link from 'next/link';
 import { Home, Dumbbell, Settings, Utensils, TrendingUp } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-
-  const getPageTitle = () => {
-    if (pathname === '/') return 'Dashboard';
-    const segment = pathname.split('/').pop();
-    return segment ? segment.charAt(0).toUpperCase() + segment.slice(1) : 'Dashboard';
-  };
 
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <div className="flex items-center gap-2">
-             <Dumbbell className="w-6 h-6 text-primary" />
-             <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">TrackWise</span>
-          </div>
+           <Link href="/">
+             <div className="flex items-center gap-2">
+                 <Dumbbell className="w-6 h-6 text-primary" />
+                 <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">TrackWise</span>
+             </div>
+           </Link>
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
             <SidebarMenuItem>
-              <Link href="/">
-                <SidebarMenuButton isActive={pathname === '/'} tooltip="Dashboard">
+              <Link href="/" legacyBehavior passHref>
+                <SidebarMenuButton isActive={pathname === '/'} tooltip="Overview">
                   <Home />
-                  <span>Dashboard</span>
+                  <span>Overview</span>
                 </SidebarMenuButton>
               </Link>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <Link href="/workouts">
+              <Link href="/workouts" legacyBehavior passHref>
                 <SidebarMenuButton isActive={pathname.startsWith('/workouts')} tooltip="Workouts">
                     <Dumbbell />
                     <span>Workouts</span>
@@ -53,7 +50,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
              <SidebarMenuItem>
-              <Link href="/nutrition">
+              <Link href="/nutrition" legacyBehavior passHref>
                 <SidebarMenuButton isActive={pathname.startsWith('/nutrition')} tooltip="Nutrition">
                     <Utensils />
                     <span>Nutrition</span>
@@ -61,32 +58,39 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
               </Link>
             </SidebarMenuItem>
              <SidebarMenuItem>
-                <Link href="/progress">
+                <Link href="/progress" legacyBehavior passHref>
                     <SidebarMenuButton isActive={pathname.startsWith('/progress')} tooltip="Progress">
                         <TrendingUp />
                         <span>Progress</span>
                     </SidebarMenuButton>
                 </Link>
             </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarContent>
-        <SidebarFooter>
-            <SidebarMenu>
-                <SidebarMenuItem>
-                  <Link href="/settings">
+             <SidebarMenuItem>
+                  <Link href="/settings" legacyBehavior passHref>
                     <SidebarMenuButton isActive={pathname === '/settings'} tooltip="Settings">
                         <Settings />
                         <span>Settings</span>
                     </SidebarMenuButton>
                   </Link>
                 </SidebarMenuItem>
-            </SidebarMenu>
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+            <div className="flex items-center gap-3 p-2">
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+                    <span className="font-semibold text-sm">Guest User</span>
+                    <span className="text-xs text-muted-foreground">guest@trackwise.fit</span>
+                </div>
+            </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
          <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
             <SidebarTrigger />
-            <h1 className="text-xl font-semibold capitalize">{getPageTitle()}</h1>
         </header>
         {children}
       </SidebarInset>

@@ -31,34 +31,13 @@ export function DailyCalories() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-4">
-          <Flame className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle>Daily Calorie Intake</CardTitle>
-            <CardDescription>
-              {consumed} / {target} kcal
-            </CardDescription>
-          </div>
-        </div>
+        <CardTitle>Daily Calorie Target</CardTitle>
+        <CardDescription>
+          {consumed} / {target} kcal consumed
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Progress value={progress} />
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Input 
-            placeholder="e.g., Apple" 
-            value={food} 
-            onChange={(e) => setFood(e.target.value)}
-            className="flex-grow"
-          />
-          <Input 
-            type="number" 
-            placeholder="Calories" 
-            value={calories} 
-            onChange={(e) => setCalories(e.target.value)}
-            className="w-full sm:w-28"
-          />
-          <Button onClick={handleAddCalories}>Add Food</Button>
-        </div>
       </CardContent>
     </Card>
   )

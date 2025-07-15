@@ -22,13 +22,8 @@ export function HydrationTracker() {
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-4">
-          <Droplet className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle>Hydration Tracker</CardTitle>
-            <CardDescription>{glasses} of {waterGoal} glasses</CardDescription>
-          </div>
-        </div>
+        <CardTitle>Hydration</CardTitle>
+        <CardDescription>{glasses} of {waterGoal} glasses</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-6 pt-2">
         <div className="flex items-end gap-2">
@@ -36,19 +31,18 @@ export function HydrationTracker() {
             <div key={i} className="flex flex-col items-center gap-1">
               <div
                 className={cn(
-                  "w-10 h-16 rounded-t-lg border-2 border-b-4 border-blue-300 transition-all duration-300 relative overflow-hidden",
-                  i < glasses ? "bg-blue-400" : "bg-blue-100"
+                  "w-8 h-12 rounded-t-md border-2 border-b-4 border-blue-300/50 transition-all duration-300 relative overflow-hidden",
+                  i < glasses ? "bg-blue-400/50" : "bg-muted"
                 )}
               >
                  <div
                   className={cn(
-                    "absolute bottom-0 left-0 right-0 h-full w-full bg-blue-500 transition-all transform origin-bottom",
+                    "absolute bottom-0 left-0 right-0 h-full w-full bg-blue-500/80 transition-all transform origin-bottom",
                     i < glasses ? "scale-y-100" : "scale-y-0"
                   )}
                   style={{ transitionDuration: '500ms'}}
                 ></div>
               </div>
-              <span className="text-xs text-muted-foreground">{i + 1}</span>
             </div>
           ))}
         </div>
@@ -56,14 +50,11 @@ export function HydrationTracker() {
           <Button variant="outline" size="icon" onClick={handleRemoveGlass} disabled={glasses === 0}>
             <Minus className="h-4 w-4" />
           </Button>
-          <span className="text-2xl font-bold w-12 text-center">{glasses}</span>
+          <span className="text-xl font-bold w-12 text-center">{glasses}</span>
           <Button variant="outline" size="icon" onClick={handleAddGlass}>
             <Plus className="h-4 w-4" />
           </Button>
         </div>
-        <p className="text-sm text-muted-foreground text-center">
-            {glasses >= waterGoal ? "Great job! You've reached your hydration goal." : `You're ${waterGoal - glasses} glasses away from your goal.`}
-        </p>
       </CardContent>
     </Card>
   )

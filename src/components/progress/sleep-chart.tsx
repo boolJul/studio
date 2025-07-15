@@ -1,7 +1,7 @@
 "use client"
 
 import { subDays, format } from "date-fns"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
@@ -31,40 +31,60 @@ const chartData = generateMockSleepData()
 
 const chartConfig = {
   hours: {
-    label: "Sleep (hours)",
+    label: "Sleep",
     color: "hsl(var(--chart-3))",
   },
 }
 
 export function SleepChart() {
+  const avgHours = (chartData.reduce((acc, item) => acc + item.hours, 0) / chartData.length).toFixed(1);
+
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center gap-4">
-          <Bed className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle>Sleep Duration</CardTitle>
-            <CardDescription>Your nightly sleep over the last 30 days.</CardDescription>
-          </div>
-        </div>
+        <CardTitle>Sleep</CardTitle>
+        <CardDescription>
+          Nightly average: <span className="font-bold text-foreground">{avgHours}h</span>
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
+        <ChartContainer config={chartConfig} className="h-40 w-full">
+           <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 0,
+              right: 12,
+              top: 0,
+              bottom: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="hsl(var(--border) / 0.5)" />
             <XAxis
               dataKey="date"
               tickLine={false}
-              tickMargin={10}
               axisLine={false}
+              tickMargin={8}
               tickFormatter={(value) => value.slice(0, 3)}
             />
+             <YAxis domain={['dataMin - 1', 'dataMax + 1']} hide/>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent unit="h" indicator="line" hideLabel />}
             />
-            <Bar dataKey="hours" fill="var(--color-hours)" radius={8} />
-          </BarChart>
+             <defs>
+                <linearGradient id="fillSleep" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="var(--color-hours)" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="var(--color-hours)" stopOpacity={0}/>
+                </linearGradient>
+            </defs>
+            <Area
+              dataKey="hours"
+              type="natural"
+              fill="url(#fillSleep)"
+              stroke="var(--color-hours)"
+            />
+          </AreaChart>
         </ChartContainer>
       </CardContent>
     </Card>

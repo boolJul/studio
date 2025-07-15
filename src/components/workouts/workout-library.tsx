@@ -109,30 +109,23 @@ export function WorkoutLibrary() {
   const [workouts] = useState<Workout[]>(initialWorkouts);
 
   return (
-    <Card>
-      <CardHeader>
+    <div className='space-y-4'>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <CardTitle>Workout Library</CardTitle>
-            <CardDescription>Find your next workout plan.</CardDescription>
+            <h2 className="text-2xl font-semibold">Browse Workouts</h2>
           </div>
            <div className="flex gap-2 w-full sm:w-auto">
              <div className="relative flex-grow">
                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                <Input placeholder="Search workouts..." className="pl-8 w-full" />
              </div>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              New Workout
-            </Button>
            </div>
         </div>
-      </CardHeader>
-      <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {workouts.map((workout) => (
           <WorkoutCard key={workout.id} workout={workout} />
         ))}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
